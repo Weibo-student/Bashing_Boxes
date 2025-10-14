@@ -10,6 +10,12 @@ while true; do
 		for str in "${list[@]}"; do
    			echo "$str"
 		done
+	elif [ "$options" = "Print item at X position in list" ]; then
+		read -p "Which one do you want to print" number
+		echo "${list[number]}"
+	elif [ "$options" = "Add item to the list" ]; then
+		read -p "What do you want to add" item
+		list+=("$item")
 	elif [ "$options" = "Exit" ]; then
 		echo "Bye!"
 		break
