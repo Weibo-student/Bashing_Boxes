@@ -20,6 +20,8 @@ while true; do
 		read -p "Which one do you want to remove? " number
 		number=$((number - 1))
 		unset 'list[number]'
+	elif [ "$options" = "Remove last item from the list" ]; then
+		unset 'list[-1]'
 	elif [ "$options" = "Exit" ]; then
 		echo "Bye!"
 		break
