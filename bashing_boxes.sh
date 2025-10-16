@@ -1,30 +1,53 @@
 #!/bin/bash
 list=("Sled" "Milk carton" "Postcard" "Clothes line" "Fire extinguisher" "Handkerchief" "Combat boots" "Mountain" "Bottle opener" "Waffle")
 
+print_list(){
+	for str in "${list[@]}"; do
+		echo "$str"
+	done
+}
+
+print_select_item(){
+	read -p "Which one do you want to print? " number
+	number=$((number - 1))
+	echo "${list[number]}"
+}
+
+add_item(){
+	read -p "What do you want to add? " item
+	list+=("$item")
+}
+
+remove_item(){
+	read -p "Which one do you want to remove? " number
+	number=$((number - 1))
+	unset 'list[number]'
+}
+
+remove_last_item(){
+	unset 'list[-1]'
+}
+
+exit(){
+	echo "Bye!"
+	break
+}
 
 while true; do
 	read -p "What do you want to do?" options
 	
 	if [ "$options" = "Print list" ]; then
-		for str in "${list[@]}"; do
-   			echo "$str"
-		done
+		print_list
 	elif [ "$options" = "Print item at X position in list" ]; then
-		read -p "Which one do you want to print? " number
-		number=$((number - 1))
-		echo "${list[number]}"
+		print_select_item
 	elif [ "$options" = "Add item to the list" ]; then
-		read -p "What do you want to add? " item
-		list+=("$item")
+		add_item
 	elif [ "$options" = "Remove item - from X position" ]; then
-		read -p "Which one do you want to remove? " number
-		number=$((number - 1))
-		unset 'list[number]'
+		remove_item
 	elif [ "$options" = "Remove last item from the list" ]; then
-		unset 'list[-1]'
+		remove_last_item
 	elif [ "$options" = "Exit" ]; then
-		echo "Bye!"
-		break
+		exit
 	else
 		echo "This is not a option, please try again"
 	fi
