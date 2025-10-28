@@ -33,20 +33,21 @@ exit(){
 	break
 }
 
-add_to_log(){
-
+save_to_log(){
+	mkdir data
+	print_list > data/log.txt
 }
 
 load_log(){
-
+	...
 }
 
 print_exsiting_list(){
-
+	...
 }
 
 delete_log(){
-
+	rm data/log.txt
 }
 
 while true; do
@@ -56,6 +57,8 @@ while true; do
 	echo "Add item to the list"
 	echo "Remove item - from X position"
 	echo "Remove last item from the list"
+	echo "Save"
+	echo "Delete the saved box"
 	echo "Exit"
 
 	read -p "What do you want to do?" options
@@ -72,6 +75,10 @@ while true; do
 		remove_last_item
 	elif [ "$options" = "Exit" ]; then
 		exit
+	elif [ "$options" = "Save" ]; then
+		save_to_log
+	elif [ "$options" = "Delete the saved box" ]; then
+		delete_log
 	else
 		echo "This is not a option, please try again"
 	fi
