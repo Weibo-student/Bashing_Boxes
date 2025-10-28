@@ -39,11 +39,12 @@ save_to_log(){
 }
 
 load_log(){
-	...
+	mapfile -t list < data/log.txt
 }
 
 print_exsiting_list(){
-	...
+	load_log
+	print_list
 }
 
 delete_log(){
@@ -59,6 +60,8 @@ while true; do
 	echo "Remove last item from the list"
 	echo "Save"
 	echo "Delete the saved box"
+	echo "Load the saved box"
+	echo "Listing existing saved boxes"
 	echo "Exit"
 
 	read -p "What do you want to do?" options
@@ -79,6 +82,10 @@ while true; do
 		save_to_log
 	elif [ "$options" = "Delete the saved box" ]; then
 		delete_log
+	elif [ "$options" = "Load the saved box" ]; then
+		load_log
+	elif [ "$options" = "Listing existing saved boxes" ]; then
+		print_exsiting_list
 	else
 		echo "This is not a option, please try again"
 	fi
