@@ -33,7 +33,31 @@ exit(){
 	break
 }
 
+add_to_log(){
+
+}
+
+load_log(){
+
+}
+
+print_exsiting_list(){
+
+}
+
+delete_log(){
+
+}
+
 while true; do
+	echo "Menu: "
+	echo "Print list"
+	echo "Print item at X position in list"
+	echo "Add item to the list"
+	echo "Remove item - from X position"
+	echo "Remove last item from the list"
+	echo "Exit"
+
 	read -p "What do you want to do?" options
 	
 	if [ "$options" = "Print list" ]; then
