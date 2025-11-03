@@ -51,43 +51,68 @@ delete_log(){
 	rm data/log.txt
 }
 
-while true; do
+
+handle_options(){
+	echo -e "\n\n"
 	echo "Menu: "
-	echo "Print list"
-	echo "Print item at X position in list"
-	echo "Add item to the list"
-	echo "Remove item - from X position"
-	echo "Remove last item from the list"
-	echo "Save"
-	echo "Delete the saved box"
-	echo "Load the saved box"
-	echo "Listing existing saved boxes"
-	echo "Exit"
+	echo "1. Print list"
+	echo "2. Print item at X position in list"
+	echo "3. Add item to the list"
+	echo "4. Remove item - from X position"
+	echo "5. Remove last item from the list"
+	echo "6. Save"
+	echo "7. Delete the saved box"
+	echo "8. Load the saved box"
+	echo "9. Listing existing saved boxes"
+	echo "10. Exit"
+	echo -e "\n\n"
 
-	read -p "What do you want to do?" options
+	read -p "What do you want to do? " options
 	
-	if [ "$options" = "Print list" ]; then
-		print_list
-	elif [ "$options" = "Print item at X position in list" ]; then
-		print_select_item
-	elif [ "$options" = "Add item to the list" ]; then
-		add_item
-	elif [ "$options" = "Remove item - from X position" ]; then
-		remove_item
-	elif [ "$options" = "Remove last item from the list" ]; then
-		remove_last_item
-	elif [ "$options" = "Exit" ]; then
-		exit
-	elif [ "$options" = "Save" ]; then
-		save_to_log
-	elif [ "$options" = "Delete the saved box" ]; then
-		delete_log
-	elif [ "$options" = "Load the saved box" ]; then
-		load_log
-	elif [ "$options" = "Listing existing saved boxes" ]; then
-		print_exsiting_list
-	else
-		echo "This is not a option, please try again"
-	fi
-done
+	case $options in 
+		1)
+			print_list
+			handle_options
+			;;
+		2)
+			print_select_item
+			handle_options
+			;;
+		3)
+			add_item
+			handle_options
+			;;
+		4)
+			remove_item
+			handle_options
+			;;
+		5)
+			remove_last_item
+			handle_options
+			;;
+		6)
+			save_to_log
+			handle_options
+			;;
+		7)
+			delete_log
+			handle_options
+			;;
+		8)
+			load_log
+			handle_options
+			;;
+		9)
+			print_exsiting_list
+			handle_options
+			;;
+		10)
+			exit
+			;;
+		*)
+			echo "This is not an option, please try again"
+			;;
+	esac
+}
 
+handle_options
