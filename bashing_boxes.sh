@@ -28,13 +28,9 @@ remove_last_item(){
 	unset 'list[-1]'
 }
 
-exit(){
-	echo "Bye!"
-	break
-}
 
 save_to_log(){
-	mkdir data
+	mkdir -p data
 	print_list > data/log.txt
 }
 
@@ -51,6 +47,22 @@ delete_log(){
 	rm data/log.txt
 }
 
+generate_random_box(){
+	set -e
+
+	trap "echo 'File not existed'" ERR
+
+	read -p "How many objects you want?" size
+
+	mapfile -t list < <(shuf -n "$size" warehouse.txt)
+
+	trap "echo 'File no existed'" ERR
+
+	save_to_log
+
+	print_exsiting_list
+}
+
 
 handle_options(){
 	echo -e "\n\n"
@@ -64,7 +76,8 @@ handle_options(){
 	echo "7. Delete the saved box"
 	echo "8. Load the saved box"
 	echo "9. Listing existing saved boxes"
-	echo "10. Exit"
+	echo "10. Generate random box from file"
+	echo "11. Exit"
 	echo -e "\n\n"
 
 	read -p "What do you want to do? " options
@@ -107,6 +120,10 @@ handle_options(){
 			handle_options
 			;;
 		10)
+			generate_random_box
+			handle_options
+			;;
+		11)
 			exit
 			;;
 		*)
