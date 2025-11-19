@@ -50,35 +50,50 @@ delete_log(){
 generate_random_box(){
 	set -e
 
-	trap "echo 'File not existed'" ERR
+	trap "echo 'File does not existed'" ERR
 
 	read -p "How many objects you want?" size
 
 	mapfile -t list < <(shuf -n "$size" warehouse.txt)
 
-	trap "echo 'File no existed'" ERR
+	trap - ERR
 
 	save_to_log
 
 	print_exsiting_list
 }
 
+search(){
+	read -p "What item of part of the item do you want to search?" word
+
+	mapfile -t list < <(grep "$word" warehouse.txt)
+
+	if [[  ${#list[@]} -eq 0 ]]; then
+		echo "Nothing found"
+		handle_options
+	else
+		save_to_log
+		print_exsiting_list
+	fi
+
+}
 
 handle_options(){
-	echo -e "\n\n"
-	echo "Menu: "
-	echo "1. Print list"
-	echo "2. Print item at X position in list"
-	echo "3. Add item to the list"
-	echo "4. Remove item - from X position"
-	echo "5. Remove last item from the list"
-	echo "6. Save"
-	echo "7. Delete the saved box"
-	echo "8. Load the saved box"
-	echo "9. Listing existing saved boxes"
-	echo "10. Generate random box from file"
-	echo "11. Exit"
-	echo -e "\n\n"
+	echo -e "
+	Menu:
+	1. Print list
+	2. Print item at X position in list
+	3. Add item to the list
+	4. Remove item - from X position
+	5. Remove last item from the list
+	6. Save
+	7. Delete the saved box
+	8. Load the saved box
+	9. Listing existing saved boxes
+	10. Generate random box from file
+	11. Search
+	12. Exit
+	"
 
 	read -p "What do you want to do? " options
 	
@@ -124,10 +139,15 @@ handle_options(){
 			handle_options
 			;;
 		11)
+			search
+			handle_options
+			;;
+		12)
 			exit
 			;;
 		*)
 			echo "This is not an option, please try again"
+			handle_options
 			;;
 	esac
 }
